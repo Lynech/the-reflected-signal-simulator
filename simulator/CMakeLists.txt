@@ -1,13 +1,4 @@
-set(TARGET "simulator")
+project(simulator)
 
-project(${TARGET} LANGUAGES CXX)
-
-set(SOURCES
-    main.cpp
-)
-
-add_executable(
-    ${TARGET} ${SOURCES}
-)
-
-install(TARGETS ${TARGET})
+add_executable(simulator main.cpp)
+target_link_libraries(simulator lib)

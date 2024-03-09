@@ -28,6 +28,6 @@ public:
 
 };
 
-std::ostream & operator<< (std::ostream & os, const Object obj);
+std::ostream & operator<< (std::ostream & os, const Object & obj);
 
 #endif

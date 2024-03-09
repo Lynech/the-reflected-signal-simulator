@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required (VERSION 3.5)
 
-project(simulator)
+project(full_simulator)
 
-include_directories(
-    lib/
-)
-
-add_subdirectory("simulator")
+add_subdirectory(lib)
+add_subdirectory(simulator)

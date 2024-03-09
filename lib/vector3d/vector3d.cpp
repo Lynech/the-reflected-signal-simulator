@@ -30,14 +30,16 @@ Vector3D Vector3D:: operator- (const Vector3D other) const
   }
 Vector3D& Vector3D::operator= (const Vector3D & v)
   {
+    if (this == &v)
+        return *this;
   x = v.x;
   y = v.y;
   z = v.z;
-  //  return this;
+  return *this;
   }
 
 std::ostream & operator<< (std::ostream & os, const Vector3D & v)
 {
-  os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-  return os;
+  return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+  
 }

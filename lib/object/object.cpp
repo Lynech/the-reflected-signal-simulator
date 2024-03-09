@@ -28,4 +28,8 @@ void Object::update (double time)
   coordinates.z += time * velocity.z;
   }
 
-std::ostream & operator<< (std::ostream & os, const Object & obj);
+std::ostream & operator<< (std::ostream & os, const Object & obj)
+{
+    // return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+  return os << "name: " << obj.get_name () << "\n" << "coordinates: " << obj.get_coordinates () << "\n"<< "velocity: " << obj.get_velocity () << "\n";
+}
