@@ -6,7 +6,7 @@ Vector3D::Vector3D ()
   y = 0;
   z = 0;
   }
-Vector3D::Vector3D (int xx, int yy, int zz)
+Vector3D::Vector3D (double xx, double yy, double zz)
   {
   x = xx;
   y = yy;
@@ -42,4 +42,11 @@ std::ostream & operator<< (std::ostream & os, const Vector3D & v)
 {
   return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
   
+}
+
+void Vector3D::normalize(){
+  double scale = sqrt(x*x + y*y + z*z);
+  x /= scale;
+  y /= scale;
+  z /= scale;
 }

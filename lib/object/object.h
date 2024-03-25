@@ -1,33 +1,39 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <iostream>
 #include "../vector3d/vector3d.h"
+#include <iostream>
 
-class Object
-{
+class Object {
 private:
   std::string name;
-  Vector3D velocity;
-  Vector3D coordinates;
+  double velocity;
+  double coordinates;
+  double size = 1;
 
 public:
-  Object ();
+  Object(const Object &o) {
+    name = o.name;
+    velocity = o.velocity;
+    coordinates = o.coordinates;
+    size = 1;
+  }
 
-  Object (std::string n, Vector3D c, Vector3D v);
+  Object();
 
-  Object (std::string n, int x, int y, int z, int v_x, int v_y, int v_z);
+  Object(std::string n, double v, double c);
 
-  std::string get_name ()const {return name;}
+  // Object(std::string n, int x, int y, int z, int v_x, int v_y, int v_z);
 
-  Vector3D get_velocity () const {return velocity;}
-  
-  Vector3D get_coordinates () const {return coordinates;}
+  std::string get_name() const { return name; }
 
-  void update (double time);
+  double get_velocity() const { return velocity; }
 
+  double get_coordinates() const { return coordinates; }
+
+  void update(double time);
 };
 
-std::ostream & operator<< (std::ostream & os, const Object & obj);
+std::ostream &operator<<(std::ostream &os, const Object &obj);
 
 #endif

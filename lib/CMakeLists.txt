@@ -1,5 +1,34 @@
 cmake_minimum_required (VERSION 3.5)
 
 project(lib)
-
-add_library(lib STATIC object/object.h object/object.cpp vector3d/vector3d.h vector3d/vector3d.cpp)
+# include_directories("vector3d")
+# include_directories("object")
+# include_directories("field")
+# include_directories("rls")
+# include_regular_expression(lib_dirs [^*/$])
+# file(GLOB lib_dirs "./*/")
+# include_directories(${lib_dirs})
+add_library(
+    lib STATIC
+)
+target_sources(lib
+    PRIVATE
+    object/object.cpp
+    vector3d/vector3d.cpp
+    rls/rls.cpp
+    field/field.cpp
+)
+target_include_directories(lib
+    PUBLIC
+    object
+    vector3d
+    rls
+    field
+)
+target_precompile_headers(lib
+    PUBLIC
+    object/object.h
+    rls/rls.h
+    vector3d/vector3d.h
+    field/field.h
+)
