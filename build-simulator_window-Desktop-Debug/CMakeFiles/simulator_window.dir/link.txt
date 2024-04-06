@@ -1,0 +1,3 @@
+C:\cmake\bin\cmake.exe -E rm -f CMakeFiles\simulator_window.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\simulator_window.dir/objects.a @CMakeFiles\simulator_window.dir\objects1.rsp
+C:\msys64\mingw64\bin\g++.exe -DQT_QML_DEBUG -g -mwindows -Wl,--whole-archive CMakeFiles\simulator_window.dir/objects.a -Wl,--no-whole-archive -o simulator_window.exe -Wl,--out-implib,libsimulator_window.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\simulator_window.dir\linkLibs.rsp

@@ -1,9 +1,15 @@
 #include "../lib/object/object.h"
 #include "../lib/vector3d/vector3d.h"
+#include "../lib/simulator_qt/simulatorwindow.h"
 
+#include <QApplication>
 
-int main ()
+int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
+    SimulatorWindow w;
+    w.show();
+
   Vector3D vec1 (1, 2, 3);
   std::cout << vec1 << "\n";
   Vector3D vec2 (4, 5, 6);
@@ -27,5 +33,5 @@ int main ()
 
   obj3.update(10);
   std::cout << obj3 << "\n";
-
+    return a.exec();
 }
