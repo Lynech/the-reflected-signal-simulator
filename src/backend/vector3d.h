@@ -6,7 +6,7 @@
 class Vector3D
 {
 public:
-  int x, y, z;
+  double x, y, z;
 
   Vector3D ();
 

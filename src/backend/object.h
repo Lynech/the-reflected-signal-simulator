@@ -24,6 +24,9 @@ public:
   
   Vector3D get_coordinates () const {return coordinates;}
 
+  void set_coordinates (int xx, int yy, int zz);
+  void set_velocity (double xx, double yy, double zz);
+
   void update (double time);
 
 };

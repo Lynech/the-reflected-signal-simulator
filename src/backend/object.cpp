@@ -28,6 +28,20 @@ void Object::update (double time)
   coordinates.z += time * velocity.z;
   }
 
+  void Object::set_coordinates(int xx, int yy, int zz)
+  {
+      coordinates.x = xx;
+      coordinates.y = yy;
+      coordinates.z = zz;
+  }
+
+  void Object::set_velocity(double xx, double yy, double zz)
+  {
+      velocity.x = xx;
+      velocity.y= yy;
+      velocity.z = zz;
+  }
+
 std::ostream & operator<< (std::ostream & os, const Object & obj)
 {
     // return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";

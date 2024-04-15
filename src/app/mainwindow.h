@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "object.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,5 +24,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    Object obj;
 };
 #endif // MAINWINDOW_H
