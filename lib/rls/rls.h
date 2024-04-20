@@ -19,27 +19,43 @@ private:
   // int amplitude{1};
   // double time1;
   // double time2;
-  std::shared_ptr<Field> parent;
+  std::weak_ptr<Field> parent;
+
+  // Signal radiate_signal(double power ...);
+  Signal radiate_signal();
 
 public:
-  std::optional<Object> probe();
+  void setParent(std::weak_ptr<Field> parent);
+  std::vector<std::shared_ptr<Object>> probe();
 
-  Rls(std::shared_ptr<Field> parent_);
+  Rls(std::shared_ptr<Field> const &parent_);
   ~Rls() = default;
 };
 
-class Field {
+class Field : public std::enable_shared_from_this<Field> {
 private:
   Rls main_rls;
-  Object obgects;
+  // Object obgects;
+  std::vector<std::shared_ptr<Object>> objects;
   //   std::vector<std::shared_ptr<Signal>> signals;
 
 public:
   //   void update();
-  Field(double, double);
-  std::optional<Signal> radiate_signal(double v, double d);
+  Field();
+  void enable_rls();
+  void add_object(Object *new_object);
+  void add_object(Object const &new_object);
+  void add_object(std::shared_ptr<Object> const &new_object);
+
+  std::vector<std::shared_ptr<Object>> probe() { return main_rls.probe(); }
+
+  std::vector<std::shared_ptr<Object>> getObjects();
+  // Signal& radiate_signal();
   void update(double delta_time);
 };
+
+std::ostream &operator<<(std::ostream &os,
+                         std::vector<std::shared_ptr<Object>> const &obj);
 
 #endif
 #endif

@@ -1,37 +1,33 @@
 #include "object.h"
+#include <format>
+#include <string>
 
 Object::Object() {
-  name = "name";
-  velocity = 0;
-  coordinates = 0;
+  static int count = 1;
+  name = "name" + std::to_string(count);
+  velocity = {0, 0, 0};
+  coordinates = {0, 0, 0};
+  count++;
 }
 
-Object::Object(std::string n, double v, double c) {
+Object::Object(std::string n, Vector3D v, Vector3D c) {
   name = n;
   velocity = v;
   coordinates = c;
 }
 
-// Object::Object (std::string n, int x, int y, int z, int v_x, int v_y, int
-// v_z)
-//   {
-//   name = n;
-//   velocity = Vector3D (v_x, v_y, v_z);
-//   coordinates = Vector3D (x, y, z);
-//   }
-
 void Object::update(double time) { coordinates += time * velocity; }
-
-// void Object::update (double time)
-//   {
-//   coordinates.x += time * velocity.x;
-//   coordinates.y += time * velocity.y;
-//   coordinates.z += time * velocity.z;
-//   }
 
 std::ostream &operator<<(std::ostream &os, const Object &obj) {
   // return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-  return os << "name: " << obj.get_name() << "\n"
-            << "coordinates: " << obj.get_coordinates() << "\n"
-            << "velocity: " << obj.get_velocity() << "\n";
+  // return os << "name: " << obj.get_name() << "\n"
+  //           << "coordinates: " << obj.get_coordinates() << "\n"
+  //           << "velocity: " << obj.get_velocity() << "\n";
+  //
+  // return std::format("name: {}\ncoordinates: {}\nvelocity: {}\n",
+  //                    obj.get_name(), obj.get_coordinates(),
+  //                    obj.get_velocity());
+  return os << "name: " << obj.get_name()
+            << "\ncoordinates: " << obj.get_coordinates()
+            << "\nvelocity:" << obj.get_velocity();
 }

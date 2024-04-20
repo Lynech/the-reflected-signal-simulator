@@ -1,17 +1,19 @@
 #ifndef SIGNAL_H
 #define SIGNAL_H
+#include "../object/object.h"
 #include "../vector3d/vector3d.h"
+#include <memory>
+#include <vector>
+
 class Signal {
 private:
-  double velocity;
-  double d_between;
-  double time_in_air;
+  // double power;
+  std::vector<std::shared_ptr<Object>> objects_probed;
 
 public:
-  Signal(double v, double d, double t) : velocity{v}, d_between{d}, time_in_air{t} {}
-  double getD() { return d_between; }
-  double getV() { return velocity; }
-  double getT() { return time_in_air; }
+  void SetObgects(std::vector<std::shared_ptr<Object>> &objects);
+  std::vector<std::shared_ptr<Object>> ProbedObjects();
+  // Signal(do) : velocity{v}, d_between{d}, time_in_air{t} {}
 };
 
 #endif

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.12)
 
 project(lib)
 # include_directories("vector3d")
@@ -17,6 +17,7 @@ target_sources(lib
     vector3d/vector3d.cpp
     rls/rls.cpp
     field/field.cpp
+    signal/signal.cpp
 )
 target_include_directories(lib
     PUBLIC
