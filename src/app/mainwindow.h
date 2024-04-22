@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "object.h"
+#include "grid_widget.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,5 +26,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Object obj;
-};
+    Grid* grid= new Grid;
+}   ;
 #endif // MAINWINDOW_H

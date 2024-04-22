@@ -2,6 +2,10 @@
 #include "./ui_mainwindow.h"
 #include <QRegularExpressionValidator>
 #include <QIntValidator>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsProxyWidget>
+#include "grid_widget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -35,6 +39,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_signal_direct_x->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
     ui->lineEdit_signal_direct_y->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
     ui->lineEdit_signal_direct_z->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
+
+    QScrollArea *scroll_area = new QScrollArea;
+    scroll_area->setWidget(grid);
+
+    scroll_area->setWidgetResizable(true); // Make the scroll area resizable
+    scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->tabWidget->addTab(scroll_area, "Scene");
 
 }
 
@@ -76,4 +88,7 @@ void MainWindow::on_pushButton_apply_object_clicked()
     ui->lineEdit_object_vel_z->setText(QString::number(v_z));
 
     obj.set_velocity(v_x, v_y, v_z);
-    std::cout<<obj << std::endl;}
+    std::cout<<obj << std::endl;
+
+    grid->setStation(c_x, c_y);
+}

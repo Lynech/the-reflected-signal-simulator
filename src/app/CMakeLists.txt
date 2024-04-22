@@ -15,6 +15,9 @@ qt_add_executable(simulator
     mainwindow.cpp
     mainwindow.h
     main.cpp
+    grid_widget.cpp
+    grid_widget.h
+
 )
 
 target_link_libraries(simulator PRIVATE Qt6::Widgets backend)

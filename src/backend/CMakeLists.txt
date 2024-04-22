@@ -5,6 +5,7 @@ add_library(backend STATIC
     object.h
     vector3d.cpp
     object.cpp
+
 )
 
 target_include_directories(backend INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
