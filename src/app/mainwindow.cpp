@@ -40,14 +40,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_signal_direct_y->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
     ui->lineEdit_signal_direct_z->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
 
-    QScrollArea *scroll_area = new QScrollArea;
-    scroll_area->setWidget(grid);
 
-    scroll_area->setWidgetResizable(true); // Make the scroll area resizable
-    scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    ui->tabWidget->addTab(scroll_area, "Scene");
+    customPlot = new QCustomPlot(this);
+    customPlot->xAxis->setRange(0, 100);
+    customPlot->yAxis->setRange(0, 100);
 
+    // Customize the legend's appearance
+    customPlot->legend->setFont(QFont("Arial", 5));
+    customPlot->legend->setIconSize(QSize(20, 20));
+    // Move the legend to the top right corner of the plot area
+    customPlot->legend->setOuterRect(customPlot->axisRect()->outerRect());
+    customPlot->axisRect()->insetLayout()->setInsetPlacement(100, QCPLayoutInset::ipFree);
+    customPlot->legend->setVisible(true);
+
+// Plot can be resizable and scrollable
+    customPlot->setInteraction(QCP::iRangeDrag, true);
+    customPlot->setInteraction(QCP::iRangeZoom, true);
+
+    ui->verticalLayout_scene->addWidget(customPlot);
 }
 
 MainWindow::~MainWindow()
@@ -90,5 +100,16 @@ void MainWindow::on_pushButton_apply_object_clicked()
     obj.set_velocity(v_x, v_y, v_z);
     std::cout<<obj << std::endl;
 
-    grid->setStation(c_x, c_y);
+    //if we had object on scene before
+    if (objectGraph){
+        customPlot->removeGraph(objectGraph);
+    }
+    objectGraph = customPlot->addGraph();
+    objectGraph->setName("Object");
+
+
+    objectGraph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, QColor(255, 0, 0), QColor(255, 0, 0, 50), 10));
+    objectGraph->addData(c_x, c_y);
+
+    customPlot->replot();
 }

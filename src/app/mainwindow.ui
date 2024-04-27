@@ -91,7 +91,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="signal_tab">
        <attribute name="title">
@@ -820,6 +820,24 @@
            <widget class="QPushButton" name="pushButton_apply_object">
             <property name="text">
              <string>Apply</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Scene</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_scene">
+          <item>
+           <widget class="QPushButton" name="pushButton_predict">
+            <property name="text">
+             <string>Predict</string>
             </property>
            </widget>
           </item>

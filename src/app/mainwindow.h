@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "object.h"
 #include "grid_widget.h"
+#include "qcustomplot.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +27,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Object obj;
-    Grid* grid= new Grid;
+    // Grid* grid= new Grid;
+    QCustomPlot *customPlot;
+
+    QCPGraph *objectGraph;
+
+
 }   ;
 #endif // MAINWINDOW_H
