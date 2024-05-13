@@ -138,7 +138,10 @@ void MainWindow::on_pushButton_predict_clicked()
 
     customPlot->replot();
 
-    connect(&updateTimer, &QTimer::timeout, this, &MainWindow::updateDotPosition);
+    if (!timer_connected){
+        connect(&updateTimer, &QTimer::timeout, this, &MainWindow::updateDotPosition);
+        timer_connected = true;
+    }
     if (!updateTimer.isActive()){
         updateTimer.start(1000); // Update every 1000 ms
         timer_active = true;
@@ -187,6 +190,7 @@ void MainWindow::on_pushButton_stop_predict_clicked()
         updateTimer.stop();
         if (predictionsGraph){
             predictionsGraph->data()->clear();
+            customPlot->removeGraph(predictionsGraph);
         }
         // Reset static variables to their initial values
         real_x = object.get_coordinates().x;

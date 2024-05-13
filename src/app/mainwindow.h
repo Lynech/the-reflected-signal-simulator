@@ -51,6 +51,7 @@ private:
 
     bool timer_active = false;
     bool timer_paused = false;
+    bool timer_connected = false;
 
 
 
