@@ -24,13 +24,34 @@ public:
 private slots:
     void on_pushButton_apply_object_clicked();
 
+    void on_pushButton_predict_clicked();
+
+    void updateDotPosition();
+
+    void on_pushButton_pause_predict_clicked();
+
+    void on_pushButton_stop_predict_clicked();
+
 private:
     Ui::MainWindow *ui;
-    Object obj;
+    Object object;
+    double real_x;
+    double real_y;
+
     // Grid* grid= new Grid;
     QCustomPlot *customPlot;
 
     QCPGraph *objectGraph;
+
+    QCPGraph *stationGraph;
+
+    QCPGraph *predictionsGraph;
+
+    QTimer updateTimer;
+
+    bool timer_active = false;
+    bool timer_paused = false;
+
 
 
 }   ;
