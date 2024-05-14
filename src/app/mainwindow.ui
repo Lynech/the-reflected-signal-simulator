@@ -91,7 +91,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="signal_tab">
        <attribute name="title">
@@ -794,7 +794,7 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_12">
                   <item>
-                   <widget class="QLineEdit" name="lineEdit"/>
+                   <widget class="QLineEdit" name="lineEdit_noise"/>
                   </item>
                   <item>
                    <widget class="QLabel" name="label_18">
@@ -838,7 +838,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pushButton_apply_noise">
             <property name="text">
              <string>Apply</string>
             </property>

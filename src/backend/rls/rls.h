@@ -46,6 +46,7 @@ public:
   void add_object(Object *new_object);
   void add_object(Object const &new_object);
   void add_object(std::shared_ptr<Object> const &new_object);
+  void clear();
 
   std::vector<std::shared_ptr<Object>> probe() { return main_rls.probe(); }
 

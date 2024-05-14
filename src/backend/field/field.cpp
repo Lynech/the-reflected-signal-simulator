@@ -33,6 +33,10 @@ void Field::add_object(std::shared_ptr<Object> const &new_object) {
   objects.push_back(new_object);
 }
 
+void Field::clear(){
+    objects = {};
+}
+
 // void Field::add_object(Object const * new_object);
 // void Field::add_object(Object const & new_object);
 std::vector<std::shared_ptr<Object>> Field::getObjects() { return objects; }

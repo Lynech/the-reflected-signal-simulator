@@ -16,6 +16,7 @@ qt_add_executable(simulator
     grid_widget.h
     qcustomplot.cpp
     qcustomplot.h
+
 )
 
 target_link_libraries(simulator PRIVATE Qt6::Widgets)

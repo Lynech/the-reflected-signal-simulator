@@ -18,24 +18,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    // if cords are not only int:
-    // ui->lineEdit_object_coord_x->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
+    QLocale lo(QLocale::C); // Use the C locale as a base
+    lo.setNumberOptions(QLocale::RejectGroupSeparator); // Reject commas as group separators
+    QDoubleValidator *validator = new QDoubleValidator(-100.0, 100.0, 2); // Set the range and decimals
+    validator->setLocale(lo); // Apply the modified locale to the validator
 
-    ui->lineEdit_object_coord_x->setValidator(new QIntValidator(0, maxCoordX, this));
-    ui->lineEdit_object_coord_y->setValidator(new QIntValidator(0, maxCoordY, this));
-    ui->lineEdit_object_coord_z->setValidator(new QIntValidator(0, maxCoordZ, this));
+    ui->lineEdit_object_coord_x->setValidator(validator);
+    ui->lineEdit_object_coord_y->setValidator(validator);
+    ui->lineEdit_object_coord_z->setValidator(validator);
 
-    ui->lineEdit_object_vel_x->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
-    ui->lineEdit_object_vel_y->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
-    ui->lineEdit_object_vel_z->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
+    ui->lineEdit_object_vel_x->setValidator(validator);
+    ui->lineEdit_object_vel_y->setValidator(validator);
+    ui->lineEdit_object_vel_z->setValidator(validator);
 
-    ui->lineEdit_station_coord_x->setValidator(new QIntValidator(0, maxCoordX, this));
-    ui->lineEdit_station_coord_y->setValidator(new QIntValidator(0, maxCoordY, this));
-    ui->lineEdit_station_coord_z->setValidator(new QIntValidator(0, maxCoordZ, this));
-
-    ui->lineEdit_signal_direct_x->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
-    ui->lineEdit_signal_direct_y->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
-    ui->lineEdit_signal_direct_z->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9]*\\.?[0-9]*"), this));
+    ui->lineEdit_signal_direct_x->setValidator(validator);
+    ui->lineEdit_signal_direct_y->setValidator(validator);
+    ui->lineEdit_signal_direct_z->setValidator(validator);
 
 
     customPlot = new QCustomPlot(this);
@@ -62,6 +60,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     stationGraph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDiamond, QColor(255, 0, 0), QColor(255, 0, 0, 50), 20));
     stationGraph->addData(0, 0);
+
+    field->enable_rls();
 }
 
 MainWindow::~MainWindow()
@@ -72,16 +72,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_apply_object_clicked()
 {
     // set coords to object
-    int c_x;
-    c_x = (ui->lineEdit_object_coord_x->text().toInt());
+    double c_x;
+    c_x = (ui->lineEdit_object_coord_x->text().toDouble());
     ui->lineEdit_object_coord_x->setText(QString::number(c_x));
 
-    int c_y;
-    c_y = (ui->lineEdit_object_coord_y->text().toInt());
+    double c_y;
+    c_y = (ui->lineEdit_object_coord_y->text().toDouble());
     ui->lineEdit_object_coord_y->setText(QString::number(c_y));
 
-    int c_z;
-    c_z = (ui->lineEdit_object_coord_z->text().toInt());
+    double c_z;
+    c_z = (ui->lineEdit_object_coord_z->text().toDouble());
     ui->lineEdit_object_coord_z->setText(QString::number(c_z));
 
     object.set_coordinates(c_x, c_y, c_z);
@@ -107,7 +107,7 @@ void MainWindow::on_pushButton_apply_object_clicked()
     //if we had object on scene before
     {
         customPlot->removeGraph(objectGraph);
-        customPlot->removeGraph(predictionsGraph);
+        customPlot->removeGraph(objectMovesGraph);
     }
     objectGraph = customPlot->addGraph();
     objectGraph->setName("Object");
@@ -125,16 +125,31 @@ void MainWindow::on_pushButton_apply_object_clicked()
     ui->pushButton_pause_predict->setEnabled(false);
     ui->pushButton_stop_predict->setEnabled(false);
 
+    field->clear();
+    field->add_object(object);
+
 }
 
 void MainWindow::on_pushButton_predict_clicked()
 {
+    objectMovesGraph = customPlot->addGraph();
+    objectMovesGraph->setName("Object moves");
+
+
+    objectMovesGraph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, QColor(255, 0, 0), QColor(0, 255, 0, 50), 5));
+    objectMovesGraph->addData(object.get_coordinates().x, object.get_coordinates().y);
+
+
     predictionsGraph = customPlot->addGraph();
     predictionsGraph->setName("Predictions");
 
 
     predictionsGraph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, QColor(0, 255, 0), QColor(0, 255, 0, 50), 5));
-    predictionsGraph->addData(object.get_coordinates().x, object.get_coordinates().y);
+
+    std::vector<std::shared_ptr<Object>> probed = field->probe();
+    Object probed_obj = *(*probed.begin());
+
+    predictionsGraph->addData(probed_obj.get_coordinates().x, probed_obj.get_coordinates().y);
 
     customPlot->replot();
 
@@ -159,7 +174,7 @@ void MainWindow::updateDotPosition() {
     real_y += object.get_velocity().y;
 
     // Update the dot's position
-    predictionsGraph->addData(real_x, real_y);
+    objectMovesGraph->addData(real_x, real_y);
 
     // Redraw the plot
     customPlot->replot();
@@ -188,9 +203,9 @@ void MainWindow::on_pushButton_stop_predict_clicked()
 {
     if (timer_active or timer_paused){
         updateTimer.stop();
-        if (predictionsGraph){
-            predictionsGraph->data()->clear();
-            customPlot->removeGraph(predictionsGraph);
+        if (objectMovesGraph){
+            objectMovesGraph->data()->clear();
+            customPlot->removeGraph(objectMovesGraph);
         }
         // Reset static variables to their initial values
         real_x = object.get_coordinates().x;
@@ -205,5 +220,15 @@ void MainWindow::on_pushButton_stop_predict_clicked()
     ui->pushButton_pause_predict->setEnabled(false);
     ui->pushButton_stop_predict->setEnabled(false);
 
+}
+
+
+
+void MainWindow::on_pushButton_apply_noise_clicked()
+{
+    double n;
+    n = (ui->lineEdit_noise->text().toDouble());
+    ui->lineEdit_noise->setText(QString::number(n));
+    noise = n;
 }
 

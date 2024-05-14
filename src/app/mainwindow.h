@@ -5,6 +5,7 @@
 #include "object.h"
 #include "grid_widget.h"
 #include "qcustomplot.h"
+#include "field.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -32,9 +33,14 @@ private slots:
 
     void on_pushButton_stop_predict_clicked();
 
+    void on_pushButton_apply_noise_clicked();
+
 private:
+    double noise = 5.0;
     Ui::MainWindow *ui;
     Object object;
+    std::shared_ptr<Field> field = std::shared_ptr<Field>(new Field);
+
     double real_x;
     double real_y;
 
@@ -44,6 +50,8 @@ private:
     QCPGraph *objectGraph;
 
     QCPGraph *stationGraph;
+
+    QCPGraph *objectMovesGraph;
 
     QCPGraph *predictionsGraph;
 
