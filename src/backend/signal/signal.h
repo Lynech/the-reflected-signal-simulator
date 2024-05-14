@@ -1,7 +1,7 @@
 #ifndef SIGNAL_H
 #define SIGNAL_H
-#include "object.h"
-#include "vector3d.h"
+#include "../object/object.h"
+#include "../vector3d/vector3d.h"
 #include <memory>
 #include <vector>
 

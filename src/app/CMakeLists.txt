@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(simulator VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# add_subdirectory(../backend/)
+include_directories(../backend/)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
@@ -19,10 +16,11 @@ qt_add_executable(simulator
     grid_widget.h
     qcustomplot.cpp
     qcustomplot.h
-
 )
 
-target_link_libraries(simulator PRIVATE Qt6::Widgets backend)
+target_link_libraries(simulator PRIVATE Qt6::Widgets)
+
+target_link_libraries(simulator PRIVATE backend)
 
 set_target_properties(simulator PROPERTIES
     WIN32_EXECUTABLE ON

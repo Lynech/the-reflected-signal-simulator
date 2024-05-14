@@ -1,5 +1,4 @@
 #include "field.h"
-#include "rls.h"
 #include <algorithm>
 
 // std::optional<Signal> Field::radiate_signal(double v, double d) {

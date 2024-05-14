@@ -5,11 +5,11 @@ project(simulator)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
-qt_standard_project_setup()
+# find_package(Qt6 REQUIRED COMPONENTS Widgets)
+# qt_standard_project_setup()
 
-add_subdirectory(src/backend)
-add_subdirectory(src/app)
+#add_subdirectory(src/backend)
+add_subdirectory(src)
 
 # set(CMAKE_BUILD_TYPE "MinSizeRel")
 # set(QT_QMAKE_EXECUTABLE "C:/msys64/mingw64/bin/qmake6.exe")

@@ -3,9 +3,9 @@
 #define RLS_H
 #define FIELD_H
 // #include "../field/field.h"
-#include "object.h"
-#include "signal.h"
-#include "vector3d.h"
+#include "../object/object.h"
+#include "../signal/signal.h"
+#include "../vector3d/vector3d.h"
 #include <memory>
 #include <optional>
 #include <tuple>
