@@ -221,7 +221,7 @@ void MainWindow::on_pushButton_predict_clicked() {
 
   // Predicted moves added
   predictionsGraph = customPlot->addGraph();
-  predictionsGraph->setName("Predi  ctions");
+  predictionsGraph->setName("Predictions");
 
   predictionsGraph->setScatterStyle(QCPScatterStyle(
       QCPScatterStyle::ssDisc, QColor(0, 255, 0), QColor(0, 255, 0, 50), 5));

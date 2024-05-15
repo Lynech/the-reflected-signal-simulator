@@ -43,6 +43,7 @@ This program module simulates reflected signals for modeling signal propagation 
    - In the Graphics tab.
 3. Saving prediction results.
    - After entering input data, a file named after the object is created, displaying the real position of the object, predicted position of the object, and calculation error.
+   ![alt text](readme_images/image-9.png)
 
 ## Project Development Capabilities
 
