@@ -62,6 +62,12 @@ MainWindow::MainWindow(QWidget *parent)
     stationGraph->addData(0, 0);
 
     field->enable_rls();
+    /*
+    QPixmap pixmap("../graphics/graph.png");
+    ui->label_graph->setPixmap(pixmap);
+    ui->label_graph->repaint();
+*/
+
 }
 
 MainWindow::~MainWindow()
@@ -108,6 +114,8 @@ void MainWindow::on_pushButton_apply_object_clicked()
     {
         customPlot->removeGraph(objectGraph);
         customPlot->removeGraph(objectMovesGraph);
+        customPlot->removeGraph(predictionsGraph);
+
     }
     objectGraph = customPlot->addGraph();
     objectGraph->setName("Object");
@@ -149,7 +157,7 @@ void MainWindow::on_pushButton_predict_clicked()
     std::vector<std::shared_ptr<Object>> probed = field->probe();
     Object probed_obj = *(*probed.begin());
 
-    predictionsGraph->addData(probed_obj.get_coordinates().x, probed_obj.get_coordinates().y);
+    predictionsGraph->addData(probed_obj.get_coordinates().x + 5, probed_obj.get_coordinates().y);
 
     customPlot->replot();
 
@@ -172,6 +180,12 @@ void MainWindow::updateDotPosition() {
     // Update position based on velocity
     real_x += object.get_velocity().x;
     real_y += object.get_velocity().y;
+
+    field->update(1);
+    std::vector<std::shared_ptr<Object>> probed = field->probe();
+    Object probed_obj = *(*probed.begin());
+
+    predictionsGraph->addData(probed_obj.get_coordinates().x + 5, probed_obj.get_coordinates().y);
 
     // Update the dot's position
     objectMovesGraph->addData(real_x, real_y);
@@ -206,6 +220,8 @@ void MainWindow::on_pushButton_stop_predict_clicked()
         if (objectMovesGraph){
             objectMovesGraph->data()->clear();
             customPlot->removeGraph(objectMovesGraph);
+            customPlot->removeGraph(predictionsGraph);
+
         }
         // Reset static variables to their initial values
         real_x = object.get_coordinates().x;
@@ -216,12 +232,14 @@ void MainWindow::on_pushButton_stop_predict_clicked()
         customPlot->replot();
     }
 
+    field->clear();
+    field->add_object(object);
+
     ui->pushButton_predict->setEnabled(true);
     ui->pushButton_pause_predict->setEnabled(false);
     ui->pushButton_stop_predict->setEnabled(false);
 
 }
-
 
 
 void MainWindow::on_pushButton_apply_noise_clicked()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>494</width>
-    <height>424</height>
+    <width>550</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="palette">
@@ -90,9 +90,47 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>3</number>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>200</height>
+       </size>
       </property>
+      <property name="currentIndex">
+       <number>6</number>
+      </property>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Start</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <family>Microsoft Tai Le</family>
+              <pointsize>17</pointsize>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>The Reflected Signal Simulator</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::AutoText</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="signal_tab">
        <attribute name="title">
         <string>Signal</string>
@@ -110,7 +148,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>436</width>
+               <width>492</width>
                <height>354</height>
               </rect>
              </property>
@@ -360,8 +398,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>450</width>
-               <height>281</height>
+               <width>506</width>
+               <height>320</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
@@ -523,8 +561,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>450</width>
-               <height>281</height>
+               <width>506</width>
+               <height>320</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
@@ -777,8 +815,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>450</width>
-               <height>281</height>
+               <width>506</width>
+               <height>320</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">
@@ -893,6 +931,48 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Graphics</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_for_graph">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_graph">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>../graphics/graph.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -902,7 +982,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>494</width>
+     <width>550</width>
      <height>21</height>
     </rect>
    </property>

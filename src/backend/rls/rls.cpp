@@ -13,8 +13,6 @@ Rls::Rls(std::shared_ptr<Field> const &parent_) : parent{parent_} {};
 
 Signal Rls::radiate_signal() {
   auto objects = parent.lock()->getObjects();
-  Object curr_obj = *(*objects.begin());
-
   {
     // в этом блоке должно быть ъ
     // математическое моделирование погрешностей
