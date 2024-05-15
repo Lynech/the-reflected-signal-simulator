@@ -12,8 +12,8 @@ qt_add_executable(simulator
     mainwindow.cpp
     mainwindow.h
     main.cpp
-    grid_widget.cpp
-    grid_widget.h
+
+
     qcustomplot.cpp
     qcustomplot.h
 

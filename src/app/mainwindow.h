@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "object.h"
-#include "grid_widget.h"
 #include "qcustomplot.h"
 #include "field.h"
 
@@ -44,7 +43,6 @@ private:
     double real_x;
     double real_y;
 
-    // Grid* grid= new Grid;
     QCustomPlot *customPlot;
 
     QCPGraph *objectGraph;
