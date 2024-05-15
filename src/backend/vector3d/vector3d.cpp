@@ -61,8 +61,6 @@ Vector3D operator*(const double &num, const Vector3D &v) { return v * num; }
 
 std::string Vector3D::string() const {
   return std::format("x={} y={} z={}", x, y, z);
-  // return "x=" + std::to_string(x) + " y=" + std::to_string(y) +
-  //        " z=" + std::to_string(z);
 }
 Vector3D::Vector3D(std::tuple<double, double, double> const &coords) {
   x = std::get<0>(coords);

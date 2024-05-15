@@ -1,8 +1,6 @@
 #include "signal.h"
 
-void Signal::SetObgects(std::vector<std::shared_ptr<Object>> &objects) {
+void Signal::SetObgects(std::vector<Object> &objects) {
   objects_probed = objects;
 }
-std::vector<std::shared_ptr<Object>> Signal::ProbedObjects() {
-  return objects_probed;
-}
+std::vector<Object> Signal::ProbedObjects() { return objects_probed; }

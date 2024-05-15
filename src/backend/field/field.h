@@ -1,44 +1,50 @@
-// #ifndef FIELD_H
-// #ifndef RLS_H
-// #define FIELD_H
-// #define RLS_H
-// #include "../object/object.h"
-// // #include "../rls/rls.h"
-// #include "../signal/signal.h"
-// #include <memory>
-// #include <optional>
-// #include <vector>
-// class Rls;
+#ifndef RLS_H
+#ifndef FIELD_H
+#define RLS_H
+#define FIELD_H
+#include <memory>
+#include <optional>
+#include <random>
+#include <tuple>
+#include <vector>
+#include <algorithm>
 
-// class Field {
-// private:
-//   Rls main_rls;
-//   // Object obgects;
-//   std::vector<std::shared_ptr<Object>> obgects;
-//   //   std::vector<std::shared_ptr<Signal>> signals;
+#include "../field/field.h"
+#include "../object/object.h"
+#include "../signal/signal.h"
+#include "../vector3d/vector3d.h"
+class Rls;
+class Field : public std::enable_shared_from_this<Field> {
+ private:
+  Rls main_rls;
+  std::vector<std::shared_ptr<Object>> objects;
 
-// public:
-//   //   void update();
-//   Field(double, double);
-//   std::optional<Signal> radiate_signal(double v, double d);
-//   void update(double delta_time);
-// };
+ public:
+  Field();
+  void enable_rls();
+  void add_object(Object new_object);
+  void clear();
 
-// class Rls {
-// private:
-//   // emitter {antenna, coordinates}
-//   // receiver {antenna, coordinates}
-//   // int amplitude{1};
-//   // double time1;
-//   // double time2;
-//   std::shared_ptr<Field> parent;
+  std::vector<Object> probe() { return main_rls.probe(); }
 
-// public:
-//   std::optional<Object> probe();
+  std::vector<Object> getObjects();
+  void update(double delta_time);
+};
+class Rls {
+ private:
+  std::weak_ptr<Field> parent;
 
-//   Rls(std::shared_ptr<Field> parent_);
-//   ~Rls() = default;
-// };
+  Signal radiate_signal();
 
-// #endif
-// #endif
+ public:
+  void setParent(std::weak_ptr<Field> parent);
+  std::vector<Object> probe();
+
+  Rls(std::shared_ptr<Field> const &parent_);
+  ~Rls() = default;
+};
+
+std::ostream &operator<<(std::ostream &os, std::vector<Object> const &obj);
+
+#endif
+#endif

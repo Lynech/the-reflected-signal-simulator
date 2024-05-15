@@ -9,14 +9,12 @@
 #include <tuple>
 
 class Vector3D {
-public:
+ public:
   double x, y, z;
 
   Vector3D();
 
   Vector3D(double xx, double yy, double zz);
-
-  // Vector3D(double xx, double yy, double zz);
 
   Vector3D(std::tuple<double, double, double> const &coords);
 
@@ -29,6 +27,20 @@ public:
   Vector3D &operator+=(const Vector3D &v);
 
   Vector3D operator*(const double &num) const;
+
+  double getX() { return x; }
+
+  double getY() { return y; }
+
+  double getZ() { return z; }
+
+  void setX(double x) { this->x = x; }
+
+  void setY(double y) { this->y = y; }
+
+  void setZ(double z) { this->z = z; }
+
+  double lenght() { return pow(x * x + y * y + z * z, 0.5); }
 
   std::string string() const;
 
