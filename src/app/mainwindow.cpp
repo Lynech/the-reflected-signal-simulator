@@ -6,8 +6,59 @@
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
 #include <QTimer>
+#include <fstream>
 
 #include "./ui_mainwindow.h"
+
+void save_results(Object obj, std::shared_ptr<Field> field_for_results){
+
+    std::string path = "C:/the-reflected-signal-simulator/src/results/" + obj.get_name() + ".txt";
+    std::ofstream outFile(path);
+
+    // Check if the file was opened successfully
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open the file." << std::endl;
+        }
+
+    outFile << "Name: " << obj.get_name() << "\n";
+    outFile << "Start coordinates: (" << obj.get_coordinates().x <<", " << obj.get_coordinates().y<<", " << obj.get_coordinates().z<< ")\n";
+    outFile << "Velocity: ("<< obj.get_velocity().x <<", " << obj.get_velocity().y<<", " << obj.get_velocity().z<< ")\n";
+    outFile<< "t - time past" << "\n"<< "r - real"<< "\n"<< "p - predicted"<< "\n"<< "s - sigma" << "\n"<< "\n";
+
+    double curr_x = obj.get_coordinates().x;
+    double curr_y = obj.get_coordinates().y;
+    double curr_z = obj.get_coordinates().z;
+
+    for (int i = 0; i<1000; ++i){
+        // Update position based on velocity
+        curr_x += i*obj.get_velocity().x;
+        curr_y += i*obj.get_velocity().y;
+        curr_z += i*obj.get_velocity().z;
+
+        outFile<<"t: "<< i << "\t" << "r: " <<curr_x << " " << curr_y << " " << curr_z << "\t";
+
+        // Predicted location
+        field_for_results->clear();
+        Vector3D c = Vector3D(curr_x, curr_y, curr_z);
+        Vector3D v = Vector3D(obj.get_velocity().x, obj.get_velocity().y, obj.get_velocity().z);
+
+        Object new_obj = Object("name", v, c);
+        field_for_results->add_object(new_obj);
+        std::vector<Object> probed = field_for_results->probe();
+        Object probed_obj = (*probed.begin());
+
+        double sigma_x = (curr_x - probed_obj.get_coordinates().x)/curr_x;
+        double sigma_y = (curr_y - probed_obj.get_coordinates().y)/curr_y;
+        double sigma_z = (curr_z - probed_obj.get_coordinates().z)/curr_z;
+
+        double sigma = sqrt(sigma_x * sigma_x + sigma_y * sigma_y + sigma_z * sigma_z)/3;
+
+        outFile<<"p: " <<probed_obj.get_coordinates().x << " " << probed_obj.get_coordinates().y << " " << probed_obj.get_coordinates().z << "\t" <<"s: " << sigma <<"\n";
+    }
+    outFile.flush();
+    outFile.close();
+
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -69,6 +120,17 @@ MainWindow::MainWindow(QWidget *parent)
   stationGraph->addData(0, 0);
 
   field->enable_rls();
+  field_for_results->enable_rls();
+
+  // Load the image into a QPixmap
+  QPixmap pixmap("C:/the-reflected-signal-simulator/src/graphics/graph.png");
+
+  // Create a QLabel to display the pixmap
+  QLabel* label = new QLabel;
+  label->setPixmap(pixmap.scaled(label->size(), Qt::KeepAspectRatioByExpanding));
+
+  // Add the QLabel to the layout
+  ui->gridLayout_for_graph->addWidget(label);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -141,6 +203,10 @@ void MainWindow::on_pushButton_apply_object_clicked() {
   // Add object to backend
   field->clear();
   field->add_object(object);
+
+  // Load results to file
+  save_results(object, field_for_results);
+
 }
 
 void MainWindow::on_pushButton_predict_clicked() {

@@ -38,6 +38,8 @@ class MainWindow : public QMainWindow {
   Ui::MainWindow *ui;
   Object object;
   std::shared_ptr<Field> field = std::shared_ptr<Field>(new Field);
+  std::shared_ptr<Field> field_for_results = std::shared_ptr<Field>(new Field);
+
 
   double real_x;
   double real_y;
