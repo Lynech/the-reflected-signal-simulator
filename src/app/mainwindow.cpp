@@ -127,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   // Create a QLabel to display the pixmap
   QLabel* label = new QLabel;
-  label->setPixmap(pixmap.scaled(label->size(), Qt::KeepAspectRatioByExpanding));
+  label->setPixmap(pixmap.scaled(500,400, Qt::KeepAspectRatioByExpanding));
 
   // Add the QLabel to the layout
   ui->gridLayout_for_graph->addWidget(label);
